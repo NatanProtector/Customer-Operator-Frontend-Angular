@@ -1,0 +1,35 @@
+<section class="database-page">
+      <h1>Database</h1>
+      <p>Fetch customers from the API and display their operator mapping.</p>
+
+      <app-button
+        label="Fetch Data"
+        [loading]="isLoading()"
+        (btnClick)="fetchData()"
+      />
+
+      @if (errorMessage()) {
+        <p class="error">{{ errorMessage() }}</p>
+      }
+
+      @if (customers().length > 0) {
+        <table class="customers-table">
+          <thead>
+            <tr>
+              <th>Customer Name</th>
+              <th>Operator Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (customer of customers(); track customer.id) {
+              <tr>
+                <td>{{ customer.name }}</td>
+                <td>{{ customer.operatorName }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      } @else if (!isLoading()) {
+        <p class="note">No customer data loaded yet.</p>
+      }
+    </section>
