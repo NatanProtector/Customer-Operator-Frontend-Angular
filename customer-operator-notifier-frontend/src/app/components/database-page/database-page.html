@@ -13,7 +13,7 @@
       }
 
       @if (customers().length > 0) {
-        <table class="customers-table">
+        <table class="table">
           <thead>
             <tr>
               <th>Customer Name</th>
@@ -31,5 +31,27 @@
         </table>
       } @else if (!isLoading()) {
         <p class="note">No customer data loaded yet.</p>
+      }
+
+      @if (operators().length > 0) {
+        <h2>Operators</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Operator Name</th>
+              <th>Operator Emails</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (operator of operators(); track operator.id) {
+              <tr>
+                <td>{{ operator.name }}</td>
+                <td>{{ operator.emails.join(', ') }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      } @else if (!isLoading()) {
+        <p class="note">No operator data loaded yet.</p>
       }
     </section>

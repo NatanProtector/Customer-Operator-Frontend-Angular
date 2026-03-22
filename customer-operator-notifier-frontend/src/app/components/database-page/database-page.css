@@ -23,7 +23,7 @@ p {
     font-weight: 600;
 }
 
-.customers-table {
+.table {
     margin-top: 0.85rem;
     width: 100%;
     border-collapse: collapse;
@@ -33,20 +33,20 @@ p {
     background: #ffffff;
 }
 
-.customers-table th,
-.customers-table td {
+.table th,
+.table td {
     padding: 0.9rem 1rem;
     text-align: left;
 }
 
-.customers-table thead {
+.table thead {
     background: #f8f9fa;
 }
 
-.customers-table tbody tr + tr {
+.table tbody tr + tr {
     border-top: 1px solid #e9ecef;
 }
 
-.customers-table tbody tr:hover {
+.table tbody tr:hover {
     background: #f8fbff;
 }
