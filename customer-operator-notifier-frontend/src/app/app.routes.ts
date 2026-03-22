@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
 import { DatabasePage } from './components/database-page/database-page';
-import { NotificationsPageComponent } from './components/pages/notifications.component';
+import { NotifcationsPage } from './components/notifcations-page/notifcations-page';
 
 export const routes: Routes = [
 	{ path: '', redirectTo: 'database', pathMatch: 'full' },
 	{ path: 'database', component: DatabasePage },
-	{ path: 'notifications', component: NotificationsPageComponent }
+	{ path: 'notifications', component: NotifcationsPage }
 ];
