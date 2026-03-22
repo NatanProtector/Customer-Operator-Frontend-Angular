@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, signal } from '@angular/core';
-import { ButtonComponent } from '../components/button';
+import { Button } from '../button/button';
 
 interface Customer {
   id: string;
@@ -12,7 +12,7 @@ interface Customer {
 @Component({
   selector: 'app-database-page',
   standalone: true,
-  imports: [ButtonComponent],
+  imports: [Button],
   template: `
     <section class="database-page">
       <h1>Database</h1>
@@ -108,14 +108,14 @@ interface Customer {
   ]
 })
 export class DatabasePageComponent {
-  readonly requestUrl = 'https://localhost:32775/api/Customers';
+  readonly requestUrl = 'https://localhost:32769/api/Customers';
   readonly customers = signal<Customer[]>([]);
   readonly errorMessage = signal('');
   readonly isLoading = signal(false);
 
   constructor(private readonly http: HttpClient) {}
 
-  fetchData(): void {
+  fetchData = (): void => {
     this.errorMessage.set('');
     this.isLoading.set(true);
     this.customers.set([]);

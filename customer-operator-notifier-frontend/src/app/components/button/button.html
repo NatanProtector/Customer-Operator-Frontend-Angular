@@ -1,0 +1,9 @@
+<button
+    type="button"
+    class="modern-btn"
+    [disabled]="disabled || loading"
+    (click)="handleClick()"
+>
+    <span class="modern-btn__shine"></span>
+    <span class="modern-btn__label">{{ loading ? loadingText : label }}</span>
+</button>
