@@ -7,8 +7,9 @@ import { firstValueFrom } from 'rxjs';
   providedIn: 'root',
 })
 export class ApiService {
-  private readonly requestCustomersUrl = 'https://localhost:32769/api/Customers';
-  private readonly requestOperatorsUrl = 'https://localhost:32769/api/Operators';
+  private readonly requestBaseUrl = 'https://localhost:32775/api';
+  private readonly requestCustomersUrl = `${this.requestBaseUrl}/Customers`;
+  private readonly requestOperatorsUrl = `${this.requestBaseUrl}/Operators`;
 
   constructor(private readonly http: HttpClient) {}
 
@@ -19,5 +20,31 @@ export class ApiService {
 
   public async fetchOperators(): Promise<any> {
     return firstValueFrom(this.http.get<any>(this.requestOperatorsUrl));
+  }
+
+  public async updateCustomer(customer: ICustomer): Promise<boolean> {
+    console.log('Updating Customer:', customer);
+    // TODO: Implement API call when update endpoint is available
+    // return firstValueFrom(this.http.put<boolean>(`${this.requestCustomersUrl}/${customer.id}`, customer));
+    
+    // Simulating API response - returns true for now
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(false);
+      }, 500);
+    });
+  }
+
+  public async updateOperator(operator: any): Promise<boolean> {
+    console.log('Updating Operator:', operator);
+    // TODO: Implement API call when update endpoint is available
+    // return firstValueFrom(this.http.put<boolean>(`${this.requestOperatorsUrl}/${operator.id}`, operator));
+    
+    // Simulating API response - returns true for now
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(false);
+      }, 500);
+    });
   }
 }

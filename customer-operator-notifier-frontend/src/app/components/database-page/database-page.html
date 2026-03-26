@@ -18,6 +18,7 @@
             <tr>
               <th>Customer Name</th>
               <th>Operator Name</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -25,6 +26,14 @@
               <tr>
                 <td>{{ customer.name }}</td>
                 <td>{{ customer.operatorName }}</td>
+                <td>
+                  <button
+                    class="edit-btn"
+                    (click)="openCustomerEditDialog(customer)"
+                  >
+                    Edit
+                  </button>
+                </td>
               </tr>
             }
           </tbody>
@@ -40,6 +49,7 @@
             <tr>
               <th>Operator Name</th>
               <th>Operator Emails</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -47,11 +57,28 @@
               <tr>
                 <td>{{ operator.name }}</td>
                 <td>{{ operator.emails.join(', ') }}</td>
+                <td>
+                  <button
+                    class="edit-btn"
+                    (click)="openOperatorEditDialog(operator)"
+                  >
+                    Edit
+                  </button>
+                </td>
               </tr>
             }
           </tbody>
         </table>
       } @else if (!isLoading()) {
         <p class="note">No operator data loaded yet.</p>
+      }
+
+      @if (isDialogOpen()) {
+        <app-edit-dialog
+          [customer]="selectedCustomer()"
+          [operator]="selectedOperator()"
+          (onClose)="closeDialog()"
+          (onSave)="handleSave($event)"
+        />
       }
     </section>

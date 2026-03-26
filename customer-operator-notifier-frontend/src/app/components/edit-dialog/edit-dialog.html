@@ -1,0 +1,41 @@
+<div class="dialog-backdrop" (click)="close()">
+  <div class="dialog-content" (click)="$event.stopPropagation()">
+    <div class="dialog-header">
+      <h2>Edit Information</h2>
+      <button class="close-btn" (click)="close()">✕</button>
+    </div>
+
+    <div class="dialog-body">
+      @if (customer()) {
+        <div class="form-group">
+          <label>Customer Name</label>
+          <input type="text" [(ngModel)]="editedName" />
+        </div>
+        <div class="form-group">
+          <label>Operator Name (Read-only)</label>
+          <input
+            type="text"
+            [value]="customer()?.operatorName"
+            disabled
+          />
+        </div>
+      }
+
+      @if (operator()) {
+        <div class="form-group">
+          <label>Operator Name</label>
+          <input type="text" [(ngModel)]="editedName" />
+        </div>
+        <div class="form-group">
+          <label>Emails (comma-separated)</label>
+          <textarea [(ngModel)]="editedEmails" rows="4"></textarea>
+        </div>
+      }
+    </div>
+
+    <div class="dialog-footer">
+      <button class="cancel-btn" (click)="close()">Cancel</button>
+      <button class="save-btn" (click)="save()">Save</button>
+    </div>
+  </div>
+</div>
