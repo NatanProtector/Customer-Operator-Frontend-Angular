@@ -1,0 +1,43 @@
+<div class="dialog-backdrop" (click)="close()">
+	<div class="dialog-content" (click)="$event.stopPropagation()">
+		<div class="dialog-header">
+			<h2>
+				@if (createType() === 'customer') {
+					Create Customer
+				} @else {
+					Create Operator
+				}
+			</h2>
+			<button class="close-btn" (click)="close()">x</button>
+		</div>
+
+		<div class="dialog-body">
+			<div class="form-group">
+				<label>Name</label>
+				<input type="text" [(ngModel)]="name" />
+			</div>
+
+			@if (createType() === 'customer') {
+				<div class="form-group">
+					<label>Operator</label>
+					<select [(ngModel)]="operatorId">
+						<option value="" disabled>Select operator</option>
+						@for (operator of operators(); track operator.id) {
+							<option [value]="operator.id">{{ operator.name }}</option>
+						}
+					</select>
+				</div>
+			} @else {
+				<div class="form-group">
+					<label>Emails (comma-separated)</label>
+					<textarea [(ngModel)]="emails" rows="4"></textarea>
+				</div>
+			}
+		</div>
+
+		<div class="dialog-footer">
+			<button class="cancel-btn" (click)="close()">Cancel</button>
+			<button class="save-btn" (click)="save()">Create</button>
+		</div>
+	</div>
+</div>

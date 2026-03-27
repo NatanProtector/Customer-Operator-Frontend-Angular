@@ -2,13 +2,18 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Button } from '../button/button';
 import { EditDialogComponent } from '../edit-dialog/edit-dialog';
+import { CreateDialogComponent } from '../create-dialog/create-dialog';
 import { ApiService } from '../../services/api';
 import { ICustomer } from '../../models/icustomer';
 import { IOperator } from '../../models/ioperator';
 
+type CreateEntityType = 'customer' | 'operator';
+type NewCustomer = Pick<ICustomer, 'name' | 'operatorId'>;
+type NewOperator = Omit<IOperator, 'id'>;
+
 @Component({
   selector: 'app-database-page',
-  imports: [Button, CommonModule, EditDialogComponent],
+  imports: [Button, CommonModule, EditDialogComponent, CreateDialogComponent],
   templateUrl: './database-page.html',
   styleUrls: ['./database-page.css'], // note plural: styleUrls
 })
@@ -20,6 +25,8 @@ export class DatabasePage {
   readonly selectedCustomer = signal<ICustomer | null>(null);
   readonly selectedOperator = signal<IOperator | null>(null);
   readonly isDialogOpen = signal(false);
+  readonly isCreateDialogOpen = signal(false);
+  readonly createDialogType = signal<CreateEntityType>('customer');
 
   constructor(private readonly apiService: ApiService) {}
 
@@ -117,5 +124,42 @@ export class DatabasePage {
       }
     }
     this.closeDialog();
+  }
+
+  openAddCustomerDialog = (): void => {
+    this.createDialogType.set('customer');
+    this.isCreateDialogOpen.set(true);
+  }
+
+  openAddOperatorDialog = (): void => {
+    this.createDialogType.set('operator');
+    this.isCreateDialogOpen.set(true);
+  }
+
+  closeCreateDialog = (): void => {
+    this.isCreateDialogOpen.set(false);
+  }
+
+  handleCreateSave = async (data: NewCustomer | NewOperator): Promise<void> => {
+    if ('operatorId' in data) {
+      const success = await this.apiService.addCustomer(data);
+      if (success) {
+        alert('Customer created successfully.');
+        await this.fetchCustomerData();
+      } else {
+        alert('Add customer route is not available yet.');
+      }
+      this.closeCreateDialog();
+      return;
+    }
+
+    const success = await this.apiService.addOperator(data);
+    if (success) {
+      alert('Operator created successfully.');
+      await this.fetchOperatorData();
+    } else {
+      alert('Add operator route is not available yet.');
+    }
+    this.closeCreateDialog();
   }
 }

@@ -33,6 +33,26 @@ p {
     background: #ffffff;
 }
 
+.table-actions {
+    margin-top: 1rem;
+}
+
+.action-btn {
+    padding: 0.5rem 0.95rem;
+    background-color: #198754;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.action-btn:hover {
+    background-color: #157347;
+}
+
 .table th,
 .table td {
     padding: 0.9rem 1rem;

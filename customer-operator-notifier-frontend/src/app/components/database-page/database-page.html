@@ -13,6 +13,11 @@
       }
 
       @if (customers().length > 0) {
+        <div class="table-actions">
+          <button class="action-btn" (click)="openAddCustomerDialog()">
+            Add Customer
+          </button>
+        </div>
         <table class="table">
           <thead>
             <tr>
@@ -44,6 +49,11 @@
 
       @if (operators().length > 0) {
         <h2>Operators</h2>
+        <div class="table-actions">
+          <button class="action-btn" (click)="openAddOperatorDialog()">
+            Add Operator
+          </button>
+        </div>
         <table class="table">
           <thead>
             <tr>
@@ -79,6 +89,15 @@
           [operator]="selectedOperator()"
           (onClose)="closeDialog()"
           (onSave)="handleSave($event)"
+        />
+      }
+
+      @if (isCreateDialogOpen()) {
+        <app-create-dialog
+          [createType]="createDialogType()"
+          [operators]="operators()"
+          (onClose)="closeCreateDialog()"
+          (onCreate)="handleCreateSave($event)"
         />
       }
     </section>
