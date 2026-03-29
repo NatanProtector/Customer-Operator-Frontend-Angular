@@ -10,6 +10,7 @@ import { IOperator } from '../../models/ioperator';
 type CreateEntityType = 'customer' | 'operator';
 type NewCustomer = Pick<ICustomer, 'name' | 'operatorId'>;
 type NewOperator = Omit<IOperator, 'id'>;
+type EmailItem = { id: string; address: string };
 
 @Component({
   selector: 'app-database-page',
@@ -20,6 +21,7 @@ type NewOperator = Omit<IOperator, 'id'>;
 export class DatabasePage {
   readonly customers = signal<ICustomer[]>([]);
   readonly operators = signal<IOperator[]>([]);
+  readonly emails = signal<EmailItem[]>([]);
   readonly errorMessage = signal('');
   readonly isLoading = signal(false);
   readonly selectedCustomer = signal<ICustomer | null>(null);
@@ -31,7 +33,11 @@ export class DatabasePage {
   constructor(private readonly apiService: ApiService) {}
 
   fetchData = async (): Promise<void> => {
-    await Promise.all([this.fetchCustomerData(), this.fetchOperatorData()]);
+    await Promise.all([
+      this.fetchCustomerData(),
+      this.fetchOperatorData(),
+      this.fetchEmails(),
+    ]);
   }
 
   fetchCustomerData = async (): Promise<void> => {
@@ -59,6 +65,23 @@ export class DatabasePage {
       this.operators.set(data);
     } catch (error: any) {
       this.errorMessage.set(error?.message || 'Unknown error');
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
+  fetchEmails = async (): Promise<void> => {
+    this.errorMessage.set('');
+    this.isLoading.set(true);
+    this.emails.set([]);
+
+    try {
+      const emails = await this.apiService.fetchEmails();
+      this.emails.set(emails);
+      console.log('Fetched Emails:', emails);
+    } catch (error: any) {
+      this.errorMessage.set(error?.message || 'Unknown error');
+      console.error('Failed to fetch emails:', error);
     } finally {
       this.isLoading.set(false);
     }

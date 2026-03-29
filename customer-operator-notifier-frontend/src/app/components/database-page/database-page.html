@@ -83,6 +83,26 @@
         <p class="note">No operator data loaded yet.</p>
       }
 
+      @if (emails().length > 0) {
+        <h2>Emails</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Address</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (email of emails(); track email.id) {
+              <tr>
+                <td>{{ email.address }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      } @else if (!isLoading()) {
+        <p class="note">No email data loaded yet.</p>
+      }
+
       @if (isDialogOpen()) {
         <app-edit-dialog
           [customer]="selectedCustomer()"

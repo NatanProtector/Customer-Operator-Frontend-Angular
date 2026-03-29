@@ -6,6 +6,7 @@ import { firstValueFrom } from 'rxjs';
 
 type NewCustomer = Pick<ICustomer, 'name' | 'operatorId'>;
 type NewOperator = Omit<IOperator, 'id'>;
+type EmailDto = { id: string; address: string };
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ export class ApiService {
   private readonly requestOperatorsUrl = `${this.requestBaseUrl}/Operators`;
   private readonly requestAddCustomerUrl = `${this.requestBaseUrl}/Customers`;
   private readonly requestAddOperatorUrl = `${this.requestBaseUrl}/Operators`;
-  
+  private readonly requestEmailsUrl = `${this.requestBaseUrl}/Emails`;
 
   constructor(private readonly http: HttpClient) {}
 
@@ -64,5 +65,9 @@ export class ApiService {
   public async addOperator(operator: NewOperator): Promise<boolean> {
     console.log('Adding Operator:', operator);
     return firstValueFrom(this.http.post<any>(this.requestAddOperatorUrl, operator));
+  }
+
+  public async fetchEmails(): Promise<EmailDto[]> {
+    return firstValueFrom(this.http.get<EmailDto[]>(`${this.requestEmailsUrl}`));
   }
 }
